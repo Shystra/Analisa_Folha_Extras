@@ -34,8 +34,7 @@ select_columns = [
 # Processamento dos DataFrames
 df_filtrado = processDF(dfDirectory, select_columns)
 df_selected = df_filtrado[select_columns]
-df_selected['MATRICULA | NOME COLABORADOR'] = df_selected['MATRICULA/ CPF'].astype(str) + " | " + df_selected['NOME.1']
-
+df_selected['MATRICULA | NOME COLABORADOR'] = df_selected['NOME.1'] + "-" + df_selected['MATRICULA/ CPF'].astype(str) 
 # Extração e processamento das colunas INICIO e FIM
 temp_df = df_selected['PERIODO'].str.extract(r'(\d{1,2}:\d{2})\s*.*?\s*(\d{1,2}:\d{2})')
 temp_df.columns = ['INICIO', 'FIM']

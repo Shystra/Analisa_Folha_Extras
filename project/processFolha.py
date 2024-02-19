@@ -26,7 +26,8 @@ def processFolha(caminho_diretorio, nome_arquivo):
         df_selected['Valor'] = pd.to_numeric(df_selected['Valor'], errors='coerce')
         df_selected['Data Referência'] = pd.to_datetime(df_selected['Data Referência'], errors='coerce')
         df_selected['Mês'] = df_selected['Data Referência'].dt.strftime('%B').str.upper()
-        df_selected['MATRICULA | NOME COLABORADOR'] = df_selected['Matrícula'].astype(str) + " | " + df_selected['Nome']
+        # df_selected['MATRICULA | NOME COLABORADOR'] = df_selected['Matrícula'].astype(str) + " | " + df_selected['Nome']
+        df_selected['MATRICULA | NOME COLABORADOR'] =  df_selected['Nome'] + "-" + df_selected['Matrícula'].astype(str)
         mask = df_selected['Nome Ocorrência'].str.contains('Extras', na=False)
         df_filtered = df_selected[mask]
 

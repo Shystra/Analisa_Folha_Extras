@@ -28,7 +28,8 @@ df_filtrado = processSalario(dfDirectory, select_columns)
 df_selected = df_filtrado[select_columns]
 df_selected['Salário'] = pd.to_numeric(df_selected['Salário'], errors='coerce')
 df_selected['Jornada Mensal Horas'] = pd.to_numeric(df_selected['Jornada Mensal Horas'], errors='coerce')
-df_selected['MATRICULA | NOME COLABORADOR'] = df_selected['Matrícula'].astype(str) + " | " + df_selected['Nome']
+# df_selected['MATRICULA | NOME COLABORADOR'] = df_selected['Matrícula'].astype(str) + " | " + df_selected['Nome']
+df_selected['MATRICULA | NOME COLABORADOR'] =  df_selected['Nome'] + "-" + df_selected['Matrícula'].astype(str) 
 # print(df_selected)
 
 select_columns_salario = [
