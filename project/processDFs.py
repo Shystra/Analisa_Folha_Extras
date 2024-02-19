@@ -44,7 +44,8 @@ df_selected = pd.concat([df_selected, temp_df], axis=1)
 # Conversão para datetime.time e cálculo da duração
 df_selected['INICIO_td'] = pd.to_datetime(df_selected['INICIO'], format='%H:%M', errors='coerce').apply(time_to_timedelta)
 df_selected['FIM_td'] = pd.to_datetime(df_selected['FIM'], format='%H:%M', errors='coerce').apply(time_to_timedelta)
-
+df_selected['DATA REFERENCIA'] = pd.to_datetime(df_selected['DATA EXECUÇÃO'], errors='coerce')
+df_selected['DATA REFERENCIA'] = df_selected['DATA REFERENCIA'].dt.strftime('%B').str.upper()
 df_selected['DURACAO'] = df_selected.apply(lambda row: ((row['FIM_td'] - row['INICIO_td']) + timedelta(days=1)) if row['FIM_td'] < row['INICIO_td'] else (row['FIM_td'] - row['INICIO_td']), axis=1)
 df_selected['DURACAO_HORAS'] = df_selected['DURACAO'].dt.total_seconds() / 3600
 df_selected['DURACAO_FORMATADA'] = df_selected['DURACAO'].apply(lambda x: '{:02d}:{:02d}'.format(int(x.total_seconds() // 3600), int((x.total_seconds() % 3600) // 60)) if not pd.isna(x) else '')
@@ -54,12 +55,12 @@ mask = df_selected['DOBRA OU ESCALA / OPERAÇÃO'].str.contains('HORA EXTRA|DOBR
 df_filtered = df_selected[mask]
 
 select_columns_cobertura = [
-    'MATRICULA | NOME COLABORADOR', 'ID', 'DOBRA OU ESCALA / OPERAÇÃO', 'DATA EXECUÇÃO', 'PERIODO', 'INICIO', 'FIM', 'DURACAO_HORAS', 'DURACAO_FORMATADA'
+    'MATRICULA | NOME COLABORADOR', 'ID', 'DOBRA OU ESCALA / OPERAÇÃO', 'DATA EXECUÇÃO', 'PERIODO', 'INICIO', 'FIM', 'DURACAO_HORAS', 'DURACAO_FORMATADA', 'DATA REFERENCIA'
 ]
 
 # Agora df_filtered pode ser acessado com a nova lista de colunas incluindo 'DURACAO_FORMATADA'
 df_selectedAll = df_filtered[select_columns_cobertura]
-
+df_selectedAll.to_csv('DFs_filtrado.csv', index=False)
 print(df_selectedAll)
 
 
