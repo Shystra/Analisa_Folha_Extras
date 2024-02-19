@@ -1,6 +1,10 @@
 import pandas as pd
 import os
 
+
+caminho_diretorio = "temp_dir"
+nome_arquivo = "Analise de Extras.csv"
+
 def ler_csv_direto(caminho_diretorio, nome_arquivo):
     caminho_completo = os.path.join(caminho_diretorio, nome_arquivo)
     if os.path.exists(caminho_completo):
@@ -10,6 +14,9 @@ def ler_csv_direto(caminho_diretorio, nome_arquivo):
         print(f"O arquivo {nome_arquivo} não foi encontrado em {caminho_diretorio}.")
         return None
 
+
+
+    
 def processFolha(caminho_diretorio, nome_arquivo):
     df = ler_csv_direto(caminho_diretorio, nome_arquivo)
     if df is not None:
@@ -30,11 +37,38 @@ def processFolha(caminho_diretorio, nome_arquivo):
         
         return df_selectedAll
 
-caminho_diretorio = "temp_dir"
-nome_arquivo = "Analise de Extras.csv"
 
+def ler_salarios():
+    df_salarios = pd.read_csv('salarios_colaboradores.csv')
+    return df_salarios
+
+
+def integrar_dados_folha_com_salario(df_folha, df_salarios):
+    # Fusão dos dataframes com base na coluna 'MATRICULA | NOME COLABORADOR'
+    df_integrado = pd.merge(df_folha, df_salarios, on='MATRICULA | NOME COLABORADOR', how='left')
+    return df_integrado
+
+
+df_salarios = ler_salarios()
 df_processed = processFolha(caminho_diretorio, nome_arquivo)
-if df_processed is not None:
-    # Agrupar por colaborador e mês, e somar os valores
-    df_grouped = df_processed.groupby(['MATRICULA | NOME COLABORADOR', 'Mês', 'Data Referência', 'Nome Ocorrência'], as_index=False)['Valor'].sum()
-    print(df_grouped)
+if df_processed is not None and df_salarios is not None:
+    df_integrado = integrar_dados_folha_com_salario(df_processed, df_salarios)
+    print(df_integrado)
+
+
+
+
+
+
+
+
+
+# df_processed = processFolha(caminho_diretorio, nome_arquivo)
+# if df_processed is not None:
+#     # Agrupar por colaborador e mês, e somar os valores
+#     df_grouped = df_processed.groupby(['MATRICULA | NOME COLABORADOR', 'Mês', 'Data Referência', 'Nome Ocorrência'], as_index=False)['Valor'].sum()
+#     print(df_grouped)
+
+
+
+

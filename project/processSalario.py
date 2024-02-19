@@ -35,6 +35,9 @@ select_columns_salario = [
     'MATRICULA | NOME COLABORADOR', 'Função', 'Salário', 'Jornada Mensal Horas'
 ]
 df_selectedAll = df_selected[select_columns_salario]
+
+df_selectedAll.to_csv('salarios_colaboradores.csv', index=False)
+
 print(df_selectedAll)
 
 
