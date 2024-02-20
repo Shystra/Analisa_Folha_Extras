@@ -27,7 +27,8 @@ def consolidar_e_salvar(folhaDirectory, arquivo_saida):
     print(f"Arquivo consolidado salvo e compactado como: {arquivo_saida}.zip")
 
 # Definir o diretório e o nome do arquivo de saída
-folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/Folha"
+# folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/Folha"
+folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/VR"
 arquivo_saida = "C:/Users/localuser/Documents/Lucas/Analise de Extras"
 
 consolidar_e_salvar(folhaDirectory, arquivo_saida)

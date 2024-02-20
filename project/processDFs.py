@@ -9,7 +9,7 @@ def processDF(dfDirectory, select_columns):
     for arquivo in os.listdir(dfDirectory):
         if arquivo.endswith('.xlsx') or arquivo.endswith('.xls'):
             caminho_completo = os.path.join(dfDirectory, arquivo)
-            df = pd.read_excel(caminho_completo, sheet_name=1)
+            df = pd.read_excel(caminho_completo, sheet_name=0)
             responseObjects.append(df)
     
     responseObjectConsolidado = pd.concat(responseObjects, ignore_index=True)
@@ -27,14 +27,14 @@ def time_to_timedelta(time_val):
 # Definição dos diretórios e colunas
 dfDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/DF"
 select_columns = [
-    'ID', 'MOTIVO', 'DATA EXECUÇÃO', 'NOME', 'MATRICULA', 'CARGO', 'POSTO', 
-    'NOME.1', 'MATRICULA/ CPF', 'CARGO.1', 'DOBRA OU ESCALA / OPERAÇÃO', 'PERIODO'
+    'ID', 'MOTIVO', 'DATA EXECUÇÃO', 'NOME F', 'MATRICULA F', 'CARGO F', 'POSTO F', 
+    'NOME C', 'MATRICULA/ CPF', 'CARGO C', 'DOBRA OU ESCALA / OPERAÇÃO', 'PERIODO'
 ]
 
 # Processamento dos DataFrames
 df_filtrado = processDF(dfDirectory, select_columns)
 df_selected = df_filtrado[select_columns]
-df_selected['MATRICULA | NOME COLABORADOR'] = df_selected['NOME.1'] + "-" + df_selected['MATRICULA/ CPF'].astype(str) 
+df_selected['MATRICULA | NOME COLABORADOR'] = df_selected['NOME C'] + "-" + df_selected['MATRICULA/ CPF'].astype(str) 
 # Extração e processamento das colunas INICIO e FIM
 temp_df = df_selected['PERIODO'].str.extract(r'(\d{1,2}:\d{2})\s*.*?\s*(\d{1,2}:\d{2})')
 temp_df.columns = ['INICIO', 'FIM']
@@ -53,9 +53,14 @@ df_selected['DURACAO_FORMATADA'] = df_selected['DURACAO'].apply(lambda x: '{:02d
 mask = df_selected['DOBRA OU ESCALA / OPERAÇÃO'].str.contains('HORA EXTRA|DOBRA', na=False)
 df_filtered = df_selected[mask]
 
+# select_columns_cobertura = [
+#     'MATRICULA | NOME COLABORADOR', 'ID', 'DOBRA OU ESCALA / OPERAÇÃO', 'DATA EXECUÇÃO', 'PERIODO', 'INICIO', 'FIM', 'DURACAO_HORAS', 'DURACAO_FORMATADA', 'DATA REFERENCIA', 'CARGO.1'
+# ]
+
 select_columns_cobertura = [
-    'MATRICULA | NOME COLABORADOR', 'ID', 'DOBRA OU ESCALA / OPERAÇÃO', 'DATA EXECUÇÃO', 'PERIODO', 'INICIO', 'FIM', 'DURACAO_HORAS', 'DURACAO_FORMATADA', 'DATA REFERENCIA'
+    'MATRICULA | NOME COLABORADOR', 'ID', 'DOBRA OU ESCALA / OPERAÇÃO', 'DATA EXECUÇÃO', 'PERIODO', 'INICIO', 'FIM', 'DURACAO_HORAS', 'DURACAO_FORMATADA', 'DATA REFERENCIA', 'CARGO C'
 ]
+
 
 # Agora df_filtered pode ser acessado com a nova lista de colunas incluindo 'DURACAO_FORMATADA'
 df_selectedAll = df_filtered[select_columns_cobertura]

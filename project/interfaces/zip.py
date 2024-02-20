@@ -4,7 +4,7 @@ import os
 
 def ler_dados_consolidados(arquivo_zip):
     # Criar um diretório temporário se não existir
-    temp_dir = "temp_dir"
+    temp_dir = "temp_dir_vr"
     os.makedirs(temp_dir, exist_ok=True)
     
     with zipfile.ZipFile(arquivo_zip, 'r') as zipf:
@@ -17,7 +17,7 @@ def ler_dados_consolidados(arquivo_zip):
         # os.rmdir(temp_dir)  # Remover o diretório temp_dir, certifique-se de que está vazio
     return df
 
-arquivo_zip = "C:/Users/localuser/Documents/Lucas/Analise de Extras/Analise de Extras.zip"
+arquivo_zip = "C:/Users/localuser/Documents/Lucas/Analise de Extras/VR/Consolidado.zip"
 df = ler_dados_consolidados(arquivo_zip)
 
 

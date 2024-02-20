@@ -54,6 +54,7 @@ df_salarios = ler_salarios()
 df_processed = processFolha(caminho_diretorio, nome_arquivo)
 if df_processed is not None and df_salarios is not None:
     df_integrado = integrar_dados_folha_com_salario(df_processed, df_salarios)
+    df_integrado.to_csv('folhaDetalhada.csv', index=False)
     print(df_integrado)
 
 
