@@ -3,6 +3,7 @@ import os
 import zipfile
 
 def consolidar_e_salvar(folhaDirectory, arquivo_saida):
+    print("Executando...")
     responseObjects = []
 
     for arquivo in os.listdir(folhaDirectory):
@@ -28,7 +29,7 @@ def consolidar_e_salvar(folhaDirectory, arquivo_saida):
 
 # Definir o diretório e o nome do arquivo de saída
 # folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/Folha"
-folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/VR"
-arquivo_saida = "C:/Users/localuser/Documents/Lucas/Analise de Extras"
+folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/R09"
+arquivo_saida = "C:/Users/localuser/Documents/Lucas/Analise de Extras/R09"
 
 consolidar_e_salvar(folhaDirectory, arquivo_saida)

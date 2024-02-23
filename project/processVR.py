@@ -1,8 +1,8 @@
 import pandas as pd
 import os
 
-caminho_diretorio = "temp_dir_vr"
-nome_arquivo = "Consolidado.csv"
+caminho_diretorio = "temp_dir"
+nome_arquivo = "VR.csv"
 
 colunas = ['Nome', 'Valor do Benefício (R$)', 'Produto', 'CPF', 'Matrícula', 'Código Local Entrega', 'Local de Entrega', 'Código Departamento', 'Departamento', 'Emissão Cartão','Data', 'Recebido em', 'Assinatura']
 
@@ -12,6 +12,7 @@ def ler_csv_direto_e_limpar(caminho_diretorio, nome_arquivo):
         df = pd.read_csv(caminho_completo, header=None, skiprows=1, names=colunas)
         
         df = df.dropna(how='all')
+        
         
         # Remoção de linhas com valores específicos na coluna 'Nome'
         valores_a_excluir = ["Relatório de Detalhes do Pedido", "CNPJ:", "Razão Social:", "Pedido:", "Data do Pedido:", "Detalhes do Pedido", "Nome", "NaN" ]

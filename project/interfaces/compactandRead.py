@@ -50,5 +50,5 @@ def consolidar_e_salvar(folhaDirectory, arquivo_saida):
 # Definir o diretório e o nome do arquivo de saída
 # Exemplo de uso
 folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/VR"
-arquivo_saida = "C:/Users/localuser/Documents/Lucas/Analise de Extras/Consolidado"
+arquivo_saida = "C:/Users/localuser/Documents/Lucas/Analise de Extras/VR"
 consolidar_e_salvar(folhaDirectory, arquivo_saida)
