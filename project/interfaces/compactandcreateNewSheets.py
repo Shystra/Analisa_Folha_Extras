@@ -3,7 +3,7 @@ import os
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 
-def consolidar_e_salvar(folhaDirectory, arquivo_saida):
+def consolidar_e_salvar(folhaDirectory, arquivo_saida_base):
     print("Executando...")
     responseObjects = []
 
@@ -22,31 +22,40 @@ def consolidar_e_salvar(folhaDirectory, arquivo_saida):
     if responseObjects:
         df_consolidado = pd.concat(responseObjects, ignore_index=True)
 
-        # Cria uma nova pasta de trabalho do Excel
+        max_rows_per_sheet = 1048576
+        file_count = 1
+        row_accumulator = 0
+
+        # Cria a primeira pasta de trabalho do Excel
         wb = openpyxl.Workbook()
         ws = wb.active
         ws.title = "Sheet1"
 
-        max_rows_per_sheet = 1048576
-        sheet_count = 1
-
         for r in dataframe_to_rows(df_consolidado, index=False, header=True):
-            if ws.max_row >= max_rows_per_sheet:
-                # Cria uma nova aba se a atual atingiu o limite
-                sheet_count += 1
-                ws = wb.create_sheet(title=f"Sheet{sheet_count}")
-            ws.append(r)
+            if row_accumulator >= max_rows_per_sheet:
+                # Salva a pasta de trabalho atual e cria uma nova
+                wb.save(f"{arquivo_saida_base}_{file_count}.xlsx")
+                file_count += 1
+                row_accumulator = 0  # Reinicia o contador de linhas
 
-        # Salva a pasta de trabalho
-        wb.save(f"{arquivo_saida}.xlsx")
+                # Cria uma nova pasta de trabalho do Excel
+                wb = openpyxl.Workbook()
+                ws = wb.active
+                ws.title = "Sheet1"
+
+            ws.append(r)
+            row_accumulator += 1
+
+        # Salva a última pasta de trabalho criada
+        wb.save(f"{arquivo_saida_base}_{file_count}.xlsx")
 
         print("Encerrou o processo...")
-        print(f"Arquivo consolidado salvo como: {arquivo_saida}.xlsx")
+        print(f"Arquivos consolidados salvos com o base: {arquivo_saida_base}")
     else:
         print("Nenhum arquivo Excel válido foi encontrado para processamento.")
 
-# Definir o diretório e o nome do arquivo de saída
+# Definir o diretório e o nome do arquivo de saída base (sem a extensão)
 folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/R09"
-arquivo_saida = "C:/Users/localuser/Documents/Lucas/Analise de Extras/R09/Consolidado"
+arquivo_saida_base = "C:/Users/localuser/Documents/Lucas/Analise de Extras/R09/Consolidado_R09"
 
-consolidar_e_salvar(folhaDirectory, arquivo_saida)
+consolidar_e_salvar(folhaDirectory, arquivo_saida_base)
