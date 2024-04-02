@@ -3,7 +3,8 @@ import os
 from datetime import timedelta
 
 # O caminho completo para o arquivo
-nome_arquivo = "C:/Users/localuser/Documents/Lucas/Analise de Extras/temp_dir_Compact_R09/R09.csv"
+# nome_arquivo = "C:/Users/localuser/Documents/Lucas/Analise de Extras/temp_dir_Compact_R09/R09.csv"
+nome_arquivo = 'temp_dir_r09/r09-sucesso-01-01-2024-a-31-03-2024-mnmb62iwdd.xls'
 
 def time_to_timedelta(time_val):
     if pd.isna(time_val):
@@ -13,7 +14,7 @@ def time_to_timedelta(time_val):
 def ler_arquivo_excel(nome_arquivo):
     print("Executando...")
     if os.path.exists(nome_arquivo):
-        df = pd.read_csv(nome_arquivo)
+        df = pd.read_excel(nome_arquivo)
         df = df.dropna(how='all')
         df.columns = [col.strip() for col in df.columns]
         df = df.drop(columns=[
@@ -43,6 +44,6 @@ df = ler_arquivo_excel(nome_arquivo)
 if df is not None:
     print(df.columns)
     print(df)
-    df.to_csv('Compact R09 3 Anos.csv', index=False)
+    df.to_csv('JAN_MAR-2024.csv', index=False)
 else:
     print("DataFrame não disponível.")
