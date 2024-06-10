@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-caminho_diretorio = "temp_dir"
+caminho_diretorio = "temp_dir_r09"
 nome_arquivo = "VR.csv"
 
 colunas = ['Nome', 'Valor do Benefício (R$)', 'Produto', 'CPF', 'Matrícula', 'Código Local Entrega', 'Local de Entrega', 'Código Departamento', 'Departamento', 'Emissão Cartão','Data', 'Recebido em', 'Assinatura']
@@ -33,7 +33,7 @@ df = ler_csv_direto_e_limpar(caminho_diretorio, nome_arquivo)
 
 if df is not None:
     print(df)
-    df.to_csv('VR.csv', index=False)
+    df.to_csv('VR_2023&2024-maio.csv', index=False)
 else:
     print("DataFrame não disponível.")
 

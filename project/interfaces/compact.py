@@ -46,7 +46,7 @@ def consolidar_e_salvar(folhaDirectory, arquivo_saida):
         print("Nenhum arquivo Excel válido foi encontrado para processamento.")
 
 # Definir o diretório e o nome do arquivo de saída
-folhaDirectory = "C:/Users/localuser/Documents/Lucas/Analise de Extras/R09"
-arquivo_saida = "C:/Users/localuser/Documents/Lucas/Analise de Extras/R09/Consolidado"
+folhaDirectory = "C:/Users/localuser/Documents/joao/Planilhas/TEMP PLAN BOT"
+arquivo_saida = "VRteste"
 
 consolidar_e_salvar(folhaDirectory, arquivo_saida)
